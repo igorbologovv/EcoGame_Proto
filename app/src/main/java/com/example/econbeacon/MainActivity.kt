@@ -39,7 +39,7 @@ fun MyApp() {
     val context = LocalContext.current
 
     //LaunchedEffect(Unit) launches the initGameState(context)
-    // jetpack does not let me call this func without LaunchedEffect bacause it's a coroutine
+    // jetpack does not let me call this func without LaunchedEffect because it's a coroutine
     LaunchedEffect(key1 = Unit) {
         gameStateViewModel.initGameState(context)
     }

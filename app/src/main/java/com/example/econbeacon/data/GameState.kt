@@ -6,12 +6,15 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
 
-
+//Data class which is holding the game state.
 data class GameStateData(
     val balance: Double,
     val resources: Map<String, Int>
 )
 
+// this singleton is responsible for r/w data from/to the file
+// the logic for this class is straight froward it casts json data to dataclass
+// or it creates a default dataclass with default parameters
 object GameStateRepository {
 
     private const val FILE_NAME = "gameState.json"

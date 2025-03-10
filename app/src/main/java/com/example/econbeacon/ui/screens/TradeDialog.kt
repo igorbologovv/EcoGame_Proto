@@ -13,26 +13,26 @@ import com.example.econbeacon.viewmodel.MarketItem
 fun TradeDialog(
     item: MarketItem,
     gameStateViewModel: GameStateViewModel,
-    isBuying: Boolean,         // true = покупка, false = продажа
+    isBuying: Boolean,         // true = buy, false = sell
     onDismiss: () -> Unit
 ) {
-    // Контекст для сохранения в JSON
+    // Context for saving json
     val context = LocalContext.current
 
-    // Локальное состояние для поля ввода количества
+    // Remember entered amount
     var quantity by remember { mutableStateOf("") }
 
-    // Достаём текущее состояние из ViewModel
+    // Get current state from ViewModel
     val gameState = gameStateViewModel.gameState.collectAsState().value
     val balance = gameState?.balance ?: 0.0
     val resources = gameState?.resources ?: emptyMap()
 
-    // Считаем итоговую стоимость и проверяем, хватает ли денег / ресурсов
+    // Count and check if the operation is legit
     val qtyInt = quantity.toIntOrNull() ?: 0
     val totalCost = item.price * qtyInt
     val hasEnoughBalance = (balance >= totalCost)
     val hasEnoughResources = (resources[item.name] ?: 0) >= qtyInt
-
+    //Similar logic for the avatar pickerDialog in main screen with lambda
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
@@ -68,7 +68,7 @@ fun TradeDialog(
                     // If the amount is less or eq 0 = exit
                     if (qtyInt <= 0) return@Button
 
-                    // Покупка
+                    // Buy
                     if (isBuying) {
                         if (hasEnoughBalance) {
                             gameStateViewModel.changeBalance(-totalCost)
@@ -77,7 +77,7 @@ fun TradeDialog(
                             onDismiss()
                         }
                     }
-                    // Продажа
+                    // Sell
                     else {
                         if (hasEnoughResources) {
                             gameStateViewModel.changeBalance(+totalCost)

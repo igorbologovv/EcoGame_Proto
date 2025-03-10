@@ -21,6 +21,7 @@ import com.example.econbeacon.viewmodel.GameStateViewModel
 val MedievalButtonColor = Color(0xFF6D4C41)
 val MedievalTextColor = Color(0xFFFFD700)
 
+//Function, which draws the whole information about players balance and resources on top of the screen
 @Composable
 fun PlayerStatus(gameStateViewModel: GameStateViewModel) {
     // Collect the current game state from the view model
@@ -44,8 +45,9 @@ fun PlayerStatus(gameStateViewModel: GameStateViewModel) {
 
 @Composable
 fun MarketScreen(
+    //Retrieves the list of items from the market
     marketViewModel: MarketViewModel,
-    // Pass GameStateViewModel to manage player's balance and resources
+    // Pass GameStateViewModel to manage player's balance and resources dynamically
     gameStateViewModel: GameStateViewModel,
     onBack: () -> Unit
 ) {

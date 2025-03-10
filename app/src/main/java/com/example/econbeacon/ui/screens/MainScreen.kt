@@ -31,9 +31,11 @@ fun MainScreen(
     gameStateViewModel: GameStateViewModel,
 
     ) {
-    var selectedAvatar by remember { mutableIntStateOf(R.drawable.avatar_2) }
+    // resource id handler
+    var currentAvatar by remember { mutableIntStateOf(R.drawable.avatar_2) }
+    // show  up window state
     var showAvatarPicker by remember { mutableStateOf(false) }
-
+    // using box to place elements on top of each other
     Box(modifier = Modifier.fillMaxSize()) {
         // Background, which is kind of the city at the moment
         Image(
@@ -43,7 +45,7 @@ fun MainScreen(
             contentScale = ContentScale.Crop
         )
 
-        // Аватарка
+        // Avatar
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,7 +53,7 @@ fun MainScreen(
             contentAlignment = Alignment.TopEnd
         ) {
             Image(
-                painter = painterResource(selectedAvatar),
+                painter = painterResource(currentAvatar),
                 contentDescription = "Avatar",
                 modifier = Modifier
                     .size(72.dp)
@@ -65,9 +67,11 @@ fun MainScreen(
 
         // The avatar picker
         if (showAvatarPicker) {
+            //  lambda function is passed to AvatarPickerDialog and is called when an avatar is selected.
+            // It updates the selectedAvatar variable with the chosen avatar and hides the dialog.
             AvatarPickerDialog(
-                onAvatarSelected = { avatarRes ->
-                    selectedAvatar = avatarRes
+                onAvatarSelected = { chosenAvatarId ->
+                    currentAvatar = chosenAvatarId
                     showAvatarPicker = false
                 },
                 onDismiss = { showAvatarPicker = false }
@@ -79,6 +83,8 @@ fun MainScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
+            // Technically since there is only one button it does not matter, but
+            // if there would be more they'd look nicer in a row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -28,11 +28,18 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun MyApp() {
+    // This function initializes the game state by loading saved data,
+    // ensures that resources and balance are managed via the GameStateViewModel,
+    // and sets up navigation between the main screen and the market screen.
 
+    // Init GamestateViewModel and NavController
     val navController = rememberNavController()
     val gameStateViewModel: GameStateViewModel = viewModel()
-
+    // Using context to work with files
     val context = LocalContext.current
+
+    //LaunchedEffect(Unit) launches the initGameState(context)
+    // jetpack does not let me call this func without LaunchedEffect bacause it's a coroutine
     LaunchedEffect(key1 = Unit) {
         gameStateViewModel.initGameState(context)
     }
